@@ -1,15 +1,15 @@
-# 🍼 Baby Care E-Commerce Website
+# Baby Care E-Commerce Website
 
 Website e-commerce sederhana bertema **produk perawatan bayi** yang saya kembangkan menggunakan **HTML, CSS, dan JavaScript** tanpa framework maupun database. Seluruh data disimpan menggunakan **Local Storage**, sehingga aplikasi tetap dapat digunakan meskipun halaman direfresh.
 
 Project ini merupakan hasil pengembangan yang saya buat sebagai media pembelajaran sekaligus untuk mengimplementasikan konsep dasar website e-commerce, mulai dari perancangan antarmuka, pengelolaan data, hingga pengembangan fitur Customer dan Admin.
 
 ---
-## 🌐 Live Demo
+## Live Demo
 
 👉 **[Live Demo](https://apinisa.github.io/ecommerce-baby-care/)**
 
-## 📖 Deskripsi
+## Deskripsi
 
 Baby Care E-Commerce Website merupakan project yang saya kembangkan untuk mensimulasikan proses jual beli produk perawatan bayi secara online. Website menyediakan berbagai fitur mulai dari katalog produk, pencarian, keranjang belanja, checkout, hingga dashboard admin untuk mengelola produk dan pesanan.
 
@@ -17,7 +17,7 @@ Melalui project ini saya menerapkan konsep pengembangan website menggunakan HTML
 
 ---
 
-# ✨ Fitur
+# Fitur
 
 ### Customer
 
@@ -49,7 +49,7 @@ Melalui project ini saya menerapkan konsep pengembangan website menggunakan HTML
 - Responsive Admin Dashboard
 ---
 
-# 💻 Teknologi
+# Teknologi
 
 * HTML5
 * CSS3
@@ -59,7 +59,7 @@ Melalui project ini saya menerapkan konsep pengembangan website menggunakan HTML
 
 ---
 
-# 🚀 Cara Menjalankan
+# Cara Menjalankan
 
 1. Clone atau download repository.
 2. Buka folder project.
@@ -68,7 +68,7 @@ Melalui project ini saya menerapkan konsep pengembangan website menggunakan HTML
 
 ---
 
-# 👩‍💻 Kontribusi
+# Kontribusi
 
 Pada project ini saya berkontribusi dalam:
 
@@ -82,14 +82,13 @@ Kontribusi tersebut memberikan pengalaman dalam membangun aplikasi web sederhana
 
 ---
 
-# 📌 Catatan
+# Catatan
 
-Project ini dikembangkan sebagai media pembelajaran dan implementasi konsep dasar website E-Commerce. Repository ini digunakan sebagai dokumentasi hasil pengembangan serta portfolio untuk menunjukkan pengalaman dalam pengembangan aplikasi web.
+Project ini saya kembangkan sebagai media pembelajaran untuk memperdalam kemampuan dalam pengembangan website menggunakan HTML, CSS, dan JavaScript. Seluruh fitur, antarmuka, serta implementasi logika aplikasi dikembangkan sebagai latihan membangun website e-commerce sederhana dengan penyimpanan data menggunakan Local Storage.
 
 ---
 
 ## 👩‍💻 Developer
 
 **Annisa Nur Afinni**
-
-Project ini saya kembangkan sebagai media pembelajaran untuk memperdalam kemampuan dalam pengembangan website menggunakan HTML, CSS, dan JavaScript. Seluruh fitur, antarmuka, serta implementasi logika aplikasi dikembangkan sebagai latihan membangun website e-commerce sederhana dengan penyimpanan data menggunakan Local Storage.
+Mahasiswa Management Informatika LP3I Bandung
