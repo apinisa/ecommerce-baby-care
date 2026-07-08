@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <a class="skip-link" href="#main"><i class="fa-solid fa-arrow-down"></i> Lewati ke konten</a><div class="nez-watermark"></div>
+  <a class="skip-link" href="#main"><i class="fa-solid fa-arrow-down"></i> Lewati ke konten</a>
 
   <header class="site-header">
     <div class="container nav-wrap">
@@ -224,30 +224,21 @@
             <div class="card-head">
               <h2><i class="fa-solid fa-credit-card"></i> Metode Pembayaran</h2>
             </div>
-            <div class="payment-grid" id="paymentGrid">
-              <label class="pay-option">
-                <input type="radio" name="paymentMethod" value="bank_transfer" checked />
-                <span class="pay-ui"><i class="fa-solid fa-building-columns"></i> Transfer Bank</span>
-              </label>
-              <label class="pay-option">
-                <input type="radio" name="paymentMethod" value="e_wallet" />
-                <span class="pay-ui"><i class="fa-solid fa-wallet"></i> E-Wallet</span>
-              </label>
-              <label class="pay-option">
-                <input type="radio" name="paymentMethod" value="qris" />
-                <span class="pay-ui"><i class="fa-solid fa-qrcode"></i> QRIS</span>
-              </label>
-              <label class="pay-option">
-                <input type="radio" name="paymentMethod" value="cod" />
-                <span class="pay-ui"><i class="fa-solid fa-truck"></i> COD</span>
-              </label>
+            <div class="payment-method-select">
+              <label for="paymentMethodSelect">Pilih Metode Pembayaran</label>
+              <select id="paymentMethodSelect" name="paymentMethod">
+                <option value="qris">QRIS</option>
+                <option value="va_bca">Virtual Account (BCA)</option>
+                <option value="va_mandiri">Virtual Account (Mandiri)</option>
+                <option value="va_bri">Virtual Account (BRI)</option>
+                <option value="va_bni">Virtual Account (BNI)</option>
+                <option value="seabank">Bank Digital (SeaBank)</option>
+                <option value="e_gopay">E-Wallet (GoPay)</option>
+                <option value="e_dana">E-Wallet (DANA)</option>
+                <option value="e_ovo">E-Wallet (OVO)</option>
+              </select>
             </div>
-            <div class="payment-details" id="paymentDetails">
-              <div class="payment-card">
-                <div class="payment-title">Informasi Pembayaran</div>
-                <div class="payment-copy" id="paymentInfo">Silakan pilih metode pembayaran untuk melihat instruksi dan estimasi.</div>
-              </div>
-            </div>
+            <div class="payment-details" id="paymentDetails"></div>
           </section>
 
           <section class="card card--white shipping-panel">
@@ -367,6 +358,83 @@
         <button type="button" class="icon-btn" id="closeVoucherModal" aria-label="Tutup voucher"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="voucher-list" id="voucherList"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="nuraPayModalBackdrop" hidden></div>
+  <div class="modal" id="nuraPayModal" hidden>
+    <div class="modal-card nura-pay-card">
+      <div class="modal-header nura-pay-header">
+        <div class="nura-pay-brand">
+          <div class="nura-pay-brand-mark"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <h3>NuraPay</h3>
+            <p class="muted">Simulasi Payment Gateway</p>
+          </div>
+        </div>
+        <button type="button" class="icon-btn nura-pay-close" id="closeNuraPayModal" aria-label="Tutup NuraPay"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="nura-pay-body">
+        <div class="nura-pay-layout">
+          <aside class="nura-pay-sidebar">
+            <div class="nura-pay-sidebar-card">
+              <div class="nura-pay-sidebar-icon"><i class="fa-solid fa-receipt"></i></div>
+              <div class="nura-pay-sidebar-label">Nomor Invoice</div>
+              <div class="nura-pay-sidebar-value nura-invoice-id" id="invoice">-</div>
+            </div>
+
+            <div class="nura-pay-sidebar-card">
+              <div class="nura-pay-sidebar-icon nura-pay-sidebar-icon--blue"><i class="fa-solid fa-wallet"></i></div>
+              <div class="nura-pay-sidebar-label">Total Pembayaran</div>
+              <div class="nura-pay-sidebar-value nura-total" id="total">-</div>
+            </div>
+
+            <div class="nura-pay-sidebar-card">
+              <div class="nura-pay-sidebar-icon nura-pay-sidebar-icon--danger"><i class="fa-solid fa-clock"></i></div>
+              <div class="nura-pay-sidebar-label">Waktu Tersisa</div>
+              <div class="nura-countdown" id="countdown">15:00</div>
+              <div class="nura-pay-sidebar-meta">Selesaikan sebelum batas waktu</div>
+            </div>
+
+            <div class="nura-pay-sidebar-card">
+              <div class="nura-pay-sidebar-icon nura-pay-sidebar-icon--warning"><i class="fa-solid fa-hourglass-half"></i></div>
+              <div class="nura-pay-sidebar-label">Status Pembayaran</div>
+              <div class="nura-pay-status-pill">Menunggu Pembayaran</div>
+            </div>
+
+            <div class="nura-pay-sidebar-card">
+              <div class="nura-pay-sidebar-icon nura-pay-sidebar-icon--info"><i class="fa-solid fa-credit-card"></i></div>
+              <div class="nura-pay-sidebar-label">Metode Pembayaran</div>
+              <div class="nura-pay-sidebar-value nura-method">-</div>
+            </div>
+
+            <div class="nura-pay-security">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>Transaksi kamu aman dan terenkripsi.</span>
+            </div>
+          </aside>
+
+          <div class="nura-pay-content">
+            <div class="nura-pay-content-panel">
+              <div class="nura-pay-content-head">
+                <div>
+                  <div class="nura-pay-content-kicker">Instruksi Pembayaran</div>
+                  <h4>Detail transaksi</h4>
+                </div>
+                <div class="nura-pay-content-badge">Secure Checkout</div>
+              </div>
+
+              <div class="nura-payment-detail" id="nuraPaymentDetail"></div>
+              <div class="nura-pay-notice" id="nuraPayNotice">Silakan selesaikan pembayaran melalui instruksi di atas.</div>
+              <div class="nura-pay-actions">
+                <button class="btn btn-soft" type="button" id="nuraPayCancelBtn">Batalkan Pembayaran</button>
+                <button class="btn btn-primary" type="button" id="nuraPayConfirmBtn">Saya Sudah Bayar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

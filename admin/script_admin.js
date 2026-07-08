@@ -277,14 +277,22 @@ function renderTambahProduk(){
 
   const alertEl = document.getElementById('addProductAlert');
 
+  // hindari duplikasi event listener bila init dipanggil lebih dari sekali
+  if(form.dataset.boundAddProduct === '1') return;
+  form.dataset.boundAddProduct = '1';
+
   const catSelect = document.getElementById('categoryId');
   const categories = getCategories();
-  categories.forEach(c=>{
-    const opt = document.createElement('option');
-    opt.value = c.id;
-    opt.textContent = c.name;
-    catSelect.appendChild(opt);
-  });
+  if(catSelect){
+    catSelect.innerHTML = '';
+    categories.forEach(c=>{
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name;
+      catSelect.appendChild(opt);
+    });
+  }
+
 
   const imgFileInput = document.getElementById('imgFile');
   const imgPreview = document.getElementById('imgPreview');
@@ -326,9 +334,23 @@ function renderTambahProduk(){
     });
   }
 
+  // logging sementara: tombol diklik -> submit event akan mengikuti
+  const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+  submitBtn?.addEventListener('click', ()=>{
+    console.log('[TambahProduk] tombol diklik');
+    // LocalStorage sebelum
+    try{
+      console.log('[TambahProduk] localStorage ecosmet_products sebelum:', localStorage.getItem(LS_ADMIN.PRODUCTS));
+    }catch(err){
+      console.log('[TambahProduk] gagal baca localStorage sebelum', err);
+    }
+  });
+
   form.addEventListener('submit', (e)=>{
     e.preventDefault();
     alertEl && (alertEl.hidden=true);
+
+    console.log('[TambahProduk] submit event fired');
 
     const fd = new FormData(form);
     const name = String(fd.get('name')||'').trim();
@@ -342,6 +364,8 @@ function renderTambahProduk(){
     const img = String(fd.get('img')||'').trim();
     const desc = String(fd.get('desc')||'').trim();
 
+    console.log('[TambahProduk] data form diterima:', { name, categoryId, price, stock, rating, imgLen: img ? img.length : 0, descLen: desc ? desc.length : 0 });
+
     if(!name){
       alertEl.textContent='Nama produk wajib diisi.'; alertEl.className='alert alert--danger'; alertEl.hidden=false; return;
     }
@@ -353,8 +377,7 @@ function renderTambahProduk(){
     }
 
     const cat = categories.find(c=>c.id===categoryId);
-    const products = getProducts();
-    products.push({
+    const newProduct = {
       id: uid(),
       name,
       categoryId,
@@ -366,10 +389,46 @@ function renderTambahProduk(){
       createdAt: Date.now(),
       img: img || 'images/produk/default-produk.png',
       desc: desc || '-' 
-    });
+    };
+
+    console.log('[TambahProduk] objek produk akan disimpan:', newProduct);
+
+    const products = getProducts();
+    const before = safeJSONParse(localStorage.getItem(LS_ADMIN.PRODUCTS), []);
+    console.log('[TambahProduk] isi localStorage ecosmet_products (parsed) sebelum:', before);
+
+    // pastikan id unik, jangan menimpa
+    if(products.some(p => p.id === newProduct.id)){
+      console.log('[TambahProduk] WARNING: id duplikat terdeteksi, regenerating...');
+      newProduct.id = uid();
+    }
+
+    products.push(newProduct);
     setProducts(products);
+
+    const after = safeJSONParse(localStorage.getItem(LS_ADMIN.PRODUCTS), []);
+    console.log('[TambahProduk] isi localStorage ecosmet_products (parsed) sesudah:', after);
+
+    if(alertEl){
+      alertEl.textContent = 'Produk berhasil disimpan.';
+      alertEl.className = 'alert alert--success';
+      alertEl.hidden = false;
+    }
+
+    // reset form + preview
+    form.reset();
+    const imgPreview = document.getElementById('imgPreview');
+    const imgHidden = document.getElementById('img');
+    if(imgPreview){ imgPreview.src = ''; imgPreview.style.display='none'; }
+    if(imgHidden){ imgHidden.value = ''; }
+
+    // refresh tabel produk admin sebelum redirect (agar langsung terlihat di admin juga jika user kembali)
+    // dashboard.html akan render sendiri, tapi ini membantu jika tetap berada di konteks admin yang sama.
+    try{ renderDashboard && renderDashboard(); }catch{}
+
     window.location.href = 'produk.html';
   });
+
 }
 
 function renderEditProduk(){

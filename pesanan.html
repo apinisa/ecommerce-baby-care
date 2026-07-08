@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <a class="skip-link" href="#main"><i class="fa-solid fa-arrow-down"></i> Lewati ke konten</a><div class="nez-watermark"></div>
+  <a class="skip-link" href="#main"><i class="fa-solid fa-arrow-down"></i> Lewati ke konten</a>
 
   <header class="site-header">
     <div class="container nav-wrap">
@@ -145,17 +145,123 @@
   <div class="modal-backdrop" id="modalBackdrop" hidden></div>
 
   <div class="modal" id="orderModal" hidden>
-    <div class="modal-card">
-      <div class="modal-header">
+    <div class="modal-card order-detail-modal-card order-detail-modal-card--modern">
+      <div class="order-detail-modal-top order-detail-modal-top--invoice">
         <div>
-          <h3>Detail Pesanan</h3>
-          <p class="muted">Ringkasan pesanan dan bukti pembayaran.</p>
+          <h3 class="order-detail-modal-title">
+            <i class="fa-solid fa-receipt" aria-hidden="true"></i> Detail Pesanan
+          </h3>
+          <p class="muted">Invoice digital seperti Tokopedia/Shopee.</p>
         </div>
-        <button class="btn btn-link" type="button" id="closeOrderModal"><i class="fa-solid fa-xmark"></i></button>
+        <button class="btn btn-link order-detail-modal-close" type="button" id="closeOrderModal" aria-label="Tutup">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
       </div>
-      <div id="orderDetailContent"></div>
-      <div class="form-actions" style="justify-content:flex-end; gap:12px; margin-top:18px;">
-        <button class="btn btn-secondary" type="button" id="downloadInvoiceBtn"><i class="fa-solid fa-file-arrow-down"></i> Download Bukti Pembayaran</button>
+
+      <div class="order-detail-modal-scroll" id="orderDetailContent">
+        <!-- Konten diisi oleh JavaScript existing (tetap pakai #orderDetailContent) -->
+        <div class="order-detail-grid" aria-label="Detail Pesanan">
+          <div class="order-detail-card">
+            <div class="order-detail-card-head">
+              <div class="order-detail-card-title">
+                <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Status Pesanan
+              </div>
+              <div class="order-detail-status-badge" id="orderStatusBadge">
+                <i class="fa-solid fa-circle" aria-hidden="true"></i>
+                <span id="orderStatusText">-</span>
+              </div>
+            </div>
+            <div class="order-detail-meta">
+              <div class="order-detail-meta-item">
+                <span class="order-detail-meta-label"><i class="fa-solid fa-hashtag" aria-hidden="true"></i> Nomor Pesanan</span>
+                <span class="order-detail-meta-value" id="orderId">-</span>
+              </div>
+              <div class="order-detail-meta-item">
+                <span class="order-detail-meta-label"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Tanggal</span>
+                <span class="order-detail-meta-value" id="orderDate">-</span>
+              </div>
+              <div class="order-detail-meta-item">
+                <span class="order-detail-meta-label"><i class="fa-solid fa-credit-card" aria-hidden="true"></i> Metode Pembayaran</span>
+                <span class="order-detail-meta-value" id="payMethod">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-detail-card order-detail-card--span-2col">
+            <div class="order-detail-card-head">
+              <div class="order-detail-card-title">
+                <i class="fa-solid fa-user" aria-hidden="true"></i> Informasi Penerima
+              </div>
+            </div>
+            <div class="order-detail-two-col">
+              <div class="order-detail-info-item">
+                <div class="order-detail-info-label"><i class="fa-solid fa-user-pen" aria-hidden="true"></i> Nama</div>
+                <div class="order-detail-info-value" id="rcvName">-</div>
+              </div>
+              <div class="order-detail-info-item">
+                <div class="order-detail-info-label"><i class="fa-solid fa-phone" aria-hidden="true"></i> Nomor HP</div>
+                <div class="order-detail-info-value" id="rcvPhone">-</div>
+              </div>
+            </div>
+            <div class="order-detail-info-item">
+              <div class="order-detail-info-label"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Alamat lengkap</div>
+              <div class="order-detail-info-value order-detail-info-value--multiline" id="rcvAddress">-</div>
+            </div>
+          </div>
+
+          <div class="order-detail-card">
+            <div class="order-detail-card-head">
+              <div class="order-detail-card-title">
+                <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Daftar Produk
+              </div>
+              <div class="order-detail-subtle" id="productsCount">- item</div>
+            </div>
+            <div id="invoiceProducts" class="order-detail-products"></div>
+          </div>
+
+          <div class="order-detail-card order-detail-card--summary">
+            <div class="order-detail-card-head">
+              <div class="order-detail-card-title">
+                <i class="fa-solid fa-receipt" aria-hidden="true"></i> Ringkasan Pembayaran
+              </div>
+            </div>
+
+            <div class="order-invoice">
+              <div class="order-invoice-row">
+                <span>Subtotal Produk</span>
+                <b id="sumSub">-</b>
+              </div>
+              <div class="order-invoice-row">
+                <span>Diskon</span>
+                <b id="sumDiscount">-</b>
+              </div>
+              <div class="order-invoice-row">
+                <span>Voucher</span>
+                <b id="sumVoucher">-</b>
+              </div>
+              <div class="order-invoice-row">
+                <span>Ongkir</span>
+                <b id="sumShipping">-</b>
+              </div>
+
+              <div class="order-invoice-divider" role="separator"></div>
+
+              <div class="order-invoice-total">
+                <span class="order-invoice-total-label">TOTAL PEMBAYARAN</span>
+                <span class="order-invoice-total-value" id="sumTotal">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-detail-modal-footer order-detail-modal-footer--sticky">
+        <div class="order-detail-modal-footer-left">
+          <button class="btn btn-secondary order-detail-download" type="button" id="downloadInvoiceBtn">
+            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+            Download Bukti Pembayaran
+          </button>
+        </div>
       </div>
     </div>
   </div>

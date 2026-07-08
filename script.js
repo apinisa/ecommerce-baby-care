@@ -1181,10 +1181,11 @@ function renderCheckoutPage(){
 
   let currentShipping = 'reguler';
   let currentVoucher = '';
-  let currentPayment = 'bank_transfer';
+  let currentPayment = 'qris';
 
   const session = getSession();
   const customer = (session && session.role==='customer') ? getCustomers().find(c => c.id === session.userId) : null;
+  const paymentMethodSelect = document.getElementById('paymentMethodSelect');
 
   // --- Data Penerima (alamat tersimpan untuk login / form manual non-login) ---
   const receiverManualArea = document.getElementById('receiverManualArea');
@@ -1485,16 +1486,166 @@ function renderCheckoutPage(){
   setupReceiverForCurrentSession();
 
 
+  const PAYMENT_METHOD_DEFINITIONS = {
+    qris: {
+      title: 'QRIS',
+      subtitle: 'Scan QR Code dengan aplikasi dompet digital Anda.',
+      icon: '<i class="fa-solid fa-qrcode"></i>',
+      type: 'qris',
+      note: 'Tampilkan kode ini di aplikasi pembayaran untuk menyelesaikan transaksi.'
+    },
+    va_bca: {
+      title: 'Virtual Account (BCA)',
+      subtitle: 'Transfer via BCA Virtual Account.',
+      icon: '<i class="fa-solid fa-building-columns"></i>',
+      type: 'va',
+      bankName: 'BCA',
+      account: '700123456789',
+      note: 'Salin nomor VA dan gunakan pada menu transfer Virtual Account di aplikasi BCA.'
+    },
+    va_mandiri: {
+      title: 'Virtual Account (Mandiri)',
+      subtitle: 'Transfer via Mandiri Virtual Account.',
+      icon: '<i class="fa-solid fa-building-columns"></i>',
+      type: 'va',
+      bankName: 'Mandiri',
+      account: '700987654321',
+      note: 'Salin nomor VA dan gunakan pada menu transfer Virtual Account di aplikasi Mandiri.'
+    },
+    va_bri: {
+      title: 'Virtual Account (BRI)',
+      subtitle: 'Transfer via BRI Virtual Account.',
+      icon: '<i class="fa-solid fa-building-columns"></i>',
+      type: 'va',
+      bankName: 'BRI',
+      account: '700321654987',
+      note: 'Salin nomor VA dan gunakan pada menu transfer Virtual Account di aplikasi BRI.'
+    },
+    va_bni: {
+      title: 'Virtual Account (BNI)',
+      subtitle: 'Transfer via BNI Virtual Account.',
+      icon: '<i class="fa-solid fa-building-columns"></i>',
+      type: 'va',
+      bankName: 'BNI',
+      account: '700456789123',
+      note: 'Salin nomor VA dan gunakan pada menu transfer Virtual Account di aplikasi BNI.'
+    },
+    seabank: {
+      title: 'Bank Digital (SeaBank)',
+      subtitle: 'Pembayaran ke rekening SeaBank.',
+      icon: '<i class="fa-solid fa-piggy-bank"></i>',
+      type: 'seabank',
+      account: '1234567890123456',
+      note: 'Gunakan nomor rekening ini saat melakukan transfer ke SeaBank.'
+    },
+    e_gopay: {
+      title: 'E-Wallet (GoPay)',
+      subtitle: 'Bayar melalui GoPay.',
+      icon: '<i class="fa-solid fa-wallet"></i>',
+      type: 'e_wallet',
+      walletName: 'GoPay',
+      account: '0812-3456-7890',
+      note: 'Salin nomor tujuan pembayaran untuk digunakan pada aplikasi GoPay.'
+    },
+    e_dana: {
+      title: 'E-Wallet (DANA)',
+      subtitle: 'Bayar melalui DANA.',
+      icon: '<i class="fa-solid fa-wallet"></i>',
+      type: 'e_wallet',
+      walletName: 'DANA',
+      account: '0812-3456-7890',
+      note: 'Salin nomor tujuan pembayaran untuk digunakan pada aplikasi DANA.'
+    },
+    e_ovo: {
+      title: 'E-Wallet (OVO)',
+      subtitle: 'Bayar melalui OVO.',
+      icon: '<i class="fa-solid fa-wallet"></i>',
+      type: 'e_wallet',
+      walletName: 'OVO',
+      account: '0812-3456-7890',
+      note: 'Salin nomor tujuan pembayaran untuk digunakan pada aplikasi OVO.'
+    }
+  };
+
+  function renderPaymentDetailCard(method){
+    const payment = PAYMENT_METHOD_DEFINITIONS[method] || PAYMENT_METHOD_DEFINITIONS.qris;
+    const buildRow = (label, value) => `
+      <div class="payment-info-row">
+        <div class="payment-info-label">${label}</div>
+        <div class="payment-info-value">${value}</div>
+      </div>
+    `;
+
+    let bodyHtml = '';
+    if(payment.type === 'qris'){
+      bodyHtml = `
+        <div class="payment-qr"></div>
+        ${buildRow('Instruksi', payment.note)}
+      `;
+    } else if(payment.type === 'va'){
+      bodyHtml = `
+        ${buildRow('Bank', payment.bankName)}
+        ${buildRow('Nomor VA', payment.account)}
+        <div class="form-actions" style="justify-content:flex-end; margin-top: 12px;">
+          <button class="btn btn-ghost copy-btn" type="button" data-copy-text="${payment.account}">Salin Nomor</button>
+        </div>
+        <div class="payment-copy-note">${payment.note}</div>
+      `;
+    } else if(payment.type === 'seabank'){
+      bodyHtml = `
+        ${buildRow('Nama Bank', 'SeaBank')}
+        ${buildRow('Nomor Rekening', payment.account)}
+        <div class="form-actions" style="justify-content:flex-end; margin-top: 12px;">
+          <button class="btn btn-ghost copy-btn" type="button" data-copy-text="${payment.account}">Salin Rekening</button>
+        </div>
+        <div class="payment-copy-note">${payment.note}</div>
+      `;
+    } else {
+      bodyHtml = `
+        ${buildRow('Dompet Digital', payment.walletName)}
+        ${buildRow('Nomor Tujuan', payment.account)}
+        <div class="form-actions" style="justify-content:flex-end; margin-top: 12px;">
+          <button class="btn btn-ghost copy-btn" type="button" data-copy-text="${payment.account}">Salin Nomor</button>
+        </div>
+        <div class="payment-copy-note">${payment.note}</div>
+      `;
+    }
+
+    return `
+      <article class="payment-info-card">
+        <div class="payment-info-header">
+          <div class="payment-info-icon">${payment.icon}</div>
+          <div>
+            <div class="payment-info-title">${payment.title}</div>
+            <div class="muted">${payment.subtitle}</div>
+          </div>
+        </div>
+        ${bodyHtml}
+      </article>
+    `;
+  }
+
   function updatePaymentDetails(method){
     currentPayment = method;
-    if(!paymentInfo) return;
-    const info = {
-      bank_transfer: 'Transfer ke rekening BCA 123-456-7890 a.n. Simpan bukti pembayaran hingga pesanan dikonfirmasi.',
-      e_wallet: 'Bayar melalui OVO / GoPay / DANA. Pastikan saldo mencukupi dan gunakan nomor HP terdaftar.',
-      qris: 'Scan kode QRIS di layar atau gunakan aplikasi dompet digital Anda. Pembayaran otomatis tercatat.' ,
-      cod: 'Bayar di tempat saat pesanan tiba. Siapkan uang pas.'
-    };
-    paymentInfo.textContent = info[method] || info.bank_transfer;
+    const paymentDetails = document.getElementById('paymentDetails');
+    if(!paymentDetails) return;
+    paymentDetails.innerHTML = renderPaymentDetailCard(method);
+    const card = paymentDetails.querySelector('.payment-info-card');
+    if(card){
+      requestAnimationFrame(() => card.classList.add('active'));
+    }
+    paymentDetails.querySelectorAll('[data-copy-text]').forEach(button => {
+      button.addEventListener('click', () => {
+        const text = button.getAttribute('data-copy-text') || '';
+        if(!text) return;
+        navigator.clipboard?.writeText(text).then(() => {
+          button.textContent = 'Tersalin';
+          window.setTimeout(() => { button.textContent = button.getAttribute('data-copy-text') ? button.textContent = 'Salin Nomor' : button.textContent; }, 1400);
+        }).catch(() => {
+          window.prompt('Salin secara manual:', text);
+        });
+      });
+    });
   }
 
   function updateSummary(){
@@ -1569,6 +1720,137 @@ function renderCheckoutPage(){
     modal.classList.remove('modal-open');
   }
 
+  let nuraPayInterval = null;
+  let isNuraPayFinalizing = false;
+
+  function formatCountdown(seconds){
+    const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const secs = String(seconds % 60).padStart(2, '0');
+    return `${mins}:${secs}`;
+  }
+
+  function mapToOrderPaymentMethod(value){
+    if(value === 'qris') return 'qris';
+    if(value === 'seabank') return 'bank_transfer';
+    if(value && value.startsWith('va_')) return 'bank_transfer';
+    if(value && value.startsWith('e_')) return 'e_wallet';
+    return 'bank_transfer';
+  }
+
+  function renderNuraPayMethodDetail(method){
+    const payment = PAYMENT_METHOD_DEFINITIONS[method] || { title: method, type: 'va', account: '-', note: '' };
+    if(payment.type === 'qris'){
+      return `
+        <div class="gateway-qr"></div>
+        <div class="nura-pay-note">Scan kode QRIS dengan aplikasi dompet digital Anda untuk menyelesaikan pembayaran.</div>
+      `;
+    }
+    if(payment.type === 'va' || payment.type === 'seabank'){
+      const bankLabel = payment.type === 'seabank' ? 'SeaBank' : payment.bankName;
+      const numberLabel = payment.type === 'seabank' ? 'Nomor Rekening' : 'Nomor VA';
+      return `
+        <div class="gateway-row"><div class="gateway-label">Bank / Metode</div><div class="gateway-value">${bankLabel}</div></div>
+        <div class="gateway-row"><div class="gateway-label">${numberLabel}</div><div class="gateway-value">${payment.account}</div></div>
+        <div class="nura-pay-note">${payment.note}</div>
+      `;
+    }
+    return `
+      <div class="gateway-row"><div class="gateway-label">Dompet Digital</div><div class="gateway-value">${payment.walletName || payment.title}</div></div>
+      <div class="gateway-row"><div class="gateway-label">Nomor Tujuan</div><div class="gateway-value">${payment.account}</div></div>
+      <div class="nura-pay-note">${payment.note}</div>
+    `;
+  }
+
+  function openNuraPayModal(context){
+    pendingCheckoutContext = context;
+    const backdrop = document.getElementById('nuraPayModalBackdrop');
+    const modal = document.getElementById('nuraPayModal');
+    const detail = document.getElementById('nuraPaymentDetail');
+    const invoiceId = modal?.querySelector('.nura-invoice-id');
+    const totalEl = modal?.querySelector('.nura-total');
+    const methodEl = modal?.querySelector('.nura-method');
+    const countdownEl = modal?.querySelector('.nura-countdown');
+    const statusEl = modal?.querySelector('.nura-pay-status-pill');
+    const noticeEl = document.getElementById('nuraPayNotice');
+    if(!modal || !backdrop || !detail || !invoiceId || !totalEl || !methodEl || !countdownEl || !statusEl || !noticeEl) return;
+
+    invoiceId.textContent = context.invoice;
+    totalEl.textContent = formatRupiah(context.total);
+    methodEl.textContent = context.paymentTitle;
+    countdownEl.textContent = formatCountdown(context.countdownSeconds);
+    statusEl.textContent = 'Menunggu Pembayaran';
+    statusEl.style.color = '#0d4b80';
+    detail.innerHTML = renderNuraPayMethodDetail(context.paymentKey);
+    noticeEl.textContent = 'Silakan selesaikan pembayaran melalui instruksi di atas.';
+    noticeEl.classList.remove('nura-pay-notice--success');
+
+    if(backdrop) backdrop.hidden = false;
+    modal.hidden = false;
+    modal.classList.add('modal-open');
+
+    if(nuraPayInterval) clearInterval(nuraPayInterval);
+    nuraPayInterval = window.setInterval(() => {
+      context.countdownSeconds -= 1;
+      countdownEl.textContent = formatCountdown(Math.max(0, context.countdownSeconds));
+      if(context.countdownSeconds <= 0){
+        clearInterval(nuraPayInterval);
+        statusEl.textContent = 'Waktu Pembayaran Habis';
+        statusEl.style.color = '#be123c';
+        noticeEl.textContent = 'Pembayaran tidak terselesaikan. Silakan coba lagi.';
+      }
+    }, 1000);
+  }
+
+  function closeNuraPayModal(){
+    const backdrop = document.getElementById('nuraPayModalBackdrop');
+    const modal = document.getElementById('nuraPayModal');
+    if(nuraPayInterval){ clearInterval(nuraPayInterval); nuraPayInterval = null; }
+    if(backdrop) backdrop.hidden = true;
+    if(modal){ modal.hidden = true; modal.classList.remove('modal-open'); }
+  }
+
+  if(openVoucherModal){
+    openVoucherModal.addEventListener('click', openVoucherModalFn);
+  }
+
+  const nuraPayCancelBtn = document.getElementById('nuraPayCancelBtn');
+  const nuraPayConfirmBtn = document.getElementById('nuraPayConfirmBtn');
+  const nuraPayCloseBtn = document.getElementById('closeNuraPayModal');
+  const nuraPayNotice = document.getElementById('nuraPayNotice');
+
+  if(nuraPayCancelBtn && !nuraPayCancelBtn.dataset.bound){
+    nuraPayCancelBtn.dataset.bound = '1';
+    nuraPayCancelBtn.addEventListener('click', () => {
+      closeNuraPayModal();
+    });
+  }
+
+  if(nuraPayCloseBtn && !nuraPayCloseBtn.dataset.bound){
+    nuraPayCloseBtn.dataset.bound = '1';
+    nuraPayCloseBtn.addEventListener('click', closeNuraPayModal);
+  }
+
+  if(nuraPayConfirmBtn && !nuraPayConfirmBtn.dataset.bound){
+    nuraPayConfirmBtn.dataset.bound = '1';
+    nuraPayConfirmBtn.addEventListener('click', () => {
+      const button = nuraPayConfirmBtn;
+      const cancelBtn = nuraPayCancelBtn;
+      button.disabled = true;
+      cancelBtn && (cancelBtn.disabled = true);
+      button.textContent = 'Memproses...';
+      if(nuraPayNotice){ nuraPayNotice.textContent = 'Memverifikasi pembayaran...'; nuraPayNotice.classList.remove('nura-pay-notice--success'); }
+      window.setTimeout(() => {
+        if(nuraPayNotice){ nuraPayNotice.textContent = 'Pembayaran Berhasil'; nuraPayNotice.classList.add('nura-pay-notice--success'); }
+        button.textContent = 'Berhasil';
+        isNuraPayFinalizing = true;
+        window.setTimeout(() => {
+          closeNuraPayModal();
+          form.requestSubmit();
+        }, 1000);
+      }, 2300);
+    });
+  }
+
   if(shippingGrid){
     shippingGrid.querySelectorAll('input[name="shippingOption"]').forEach(input => {
       input.addEventListener('change', () => {
@@ -1604,11 +1886,11 @@ function renderCheckoutPage(){
   if(modalClose){ modalClose.addEventListener('click', closeVoucherModal); }
   if(modalBackdrop){ modalBackdrop.addEventListener('click', closeVoucherModal); }
 
-  form.querySelectorAll('input[name="paymentMethod"]').forEach(input => {
-    input.addEventListener('change', () => {
-      updatePaymentDetails(input.value);
+  if(paymentMethodSelect){
+    paymentMethodSelect.addEventListener('change', () => {
+      updatePaymentDetails(paymentMethodSelect.value);
     });
-  });
+  }
 
   updatePaymentDetails(currentPayment);
   updateSummary();
@@ -1634,7 +1916,7 @@ function renderCheckoutPage(){
     const snapshotRaw = String(fd.get('addressSnapshotJson')||'');
     const addressSnapshot = snapshotRaw ? safeJSONParse(snapshotRaw, null) : null;
 
-    const paymentMethod = form.querySelector('input[name="paymentMethod"]:checked')?.value || currentPayment;
+    const paymentMethodRaw = form.querySelector('select[name="paymentMethod"]')?.value || currentPayment;
     const shippingOption = form.querySelector('input[name="shippingOption"]:checked')?.value || currentShipping;
     const voucherCode = currentVoucher;
 
@@ -1646,14 +1928,24 @@ function renderCheckoutPage(){
     const { sub, discount, shipping, total } = calcCartTotals({ shippingId: shippingOption, voucherCode });
     const orderId = 'ECOS-' + Math.random().toString(16).slice(2,6).toUpperCase();
 
+    if(!isNuraPayFinalizing){
+      const paymentDef = PAYMENT_METHOD_DEFINITIONS[paymentMethodRaw] || { title: paymentMethodRaw };
+      openNuraPayModal({
+        invoice: orderId,
+        total,
+        paymentTitle: paymentDef.title || paymentMethodRaw,
+        paymentKey: paymentMethodRaw,
+        countdownSeconds: 15 * 60
+      });
+      return;
+    }
+
+    // proceed with real checkout after NuraPay confirmation
     const items = getCart().map(it => {
       const p = getProductById(it.productId);
       return { productId: it.productId, name: p?.name, price: p?.price, qty: it.qty };
     });
 
-    // address snapshot (buat historis agar alamat berubah di kemudian hari tidak mengubah riwayat)
-    // - saat login: addr di-checkout sudah terisi dari alamat tersimpan
-    // - saat belum login: snapshot biasanya null, tetapi order.address tetap menggunakan string yang ada
     const composedAddress = address && city ? `${address}, ${city} (${postalCode})` : `${address}, ${city} (${postalCode})`;
     const orderAddressSnapshot = addressSnapshot || {
       id: selectedAddressId || '',
@@ -1667,9 +1959,7 @@ function renderCheckoutPage(){
       postalCode
     };
 
-    // reduce stock
     const products = getProducts();
-
     items.forEach(line => {
       const p = products.find(x => x.id === line.productId);
       if(p){ p.stock = Math.max(0, (p.stock||0) - line.qty); }
@@ -1686,21 +1976,18 @@ function renderCheckoutPage(){
       createdAt: now.toISOString(),
       items,
       sub, discount, shipping, total,
-      // status awal pesanan
       status: 'Diproses',
-      // tetap pakai string alamat untuk kompatibilitas halaman yang ada
       address: composedAddress,
-      // snapshot alamat (object) agar riwayat tidak berubah saat user mengubah alamat di kemudian hari
       addressSnapshot: orderAddressSnapshot,
       selectedAddressId,
-      paymentMethod
+      paymentMethod: mapToOrderPaymentMethod(paymentMethodRaw)
     });
 
     setOrders(orders);
-
     localStorage.setItem(LS.LAST_SUCCESS, JSON.stringify(orders[orders.length-1]));
     setCart([]);
     setSession(session); // keep session
+    isNuraPayFinalizing = false;
 
     window.location.href = 'checkout_success.html';
   });
