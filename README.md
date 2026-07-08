@@ -21,21 +21,32 @@ Dalam pengembangan project ini, saya berkontribusi pada implementasi fitur, peny
 
 ### Customer
 
-* Login & Register
-* Melihat daftar produk
-* Pencarian produk
-* Keranjang belanja
-* Checkout
-* Riwayat pesanan
+- Login & Registrasi
+- Beranda responsif
+- Daftar Produk
+- Filter berdasarkan kategori
+- Pencarian produk
+- Detail produk
+- Rating & Review
+- Keranjang Belanja
+- Checkout
+- Riwayat Pesanan
+- Download Bukti Pembayaran
+- Edit Profil
+- Responsive Design
 
 ### Admin
 
-* Dashboard
-* Tambah produk
-* Edit produk
-* Hapus produk
-* Kelola pesanan
-
+- Login Admin
+- Dashboard
+- Statistik Produk
+- Statistik Pesanan
+- Total Pendapatan
+- Kelola Produk (CRUD)
+- Manajemen Stok
+- Kelola Pesanan
+- Update Status Pesanan
+- Responsive Admin Dashboard
 ---
 
 # 💻 Teknologi
