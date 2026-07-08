@@ -1,19 +1,19 @@
-# 👶 Baby Care - E-Commerce Website
+# 🍼 Baby Care E-Commerce Website
 
-> Website E-Commerce sederhana yang dikembangkan menggunakan **HTML, CSS, dan JavaScript** dengan penyimpanan data menggunakan **Local Storage**.
+Website e-commerce sederhana bertema **produk perawatan bayi** yang saya kembangkan menggunakan **HTML, CSS, dan JavaScript** tanpa framework maupun database. Seluruh data disimpan menggunakan **Local Storage**, sehingga aplikasi tetap dapat digunakan meskipun halaman direfresh.
+
+Project ini merupakan hasil pengembangan yang saya buat sebagai media pembelajaran sekaligus untuk mengimplementasikan konsep dasar website e-commerce, mulai dari perancangan antarmuka, pengelolaan data, hingga pengembangan fitur Customer dan Admin.
 
 ---
 ## 🌐 Live Demo
 
 👉 **[Live Demo](https://apinisa.github.io/ecommerce-baby-care/)**
 
-# 📖 Tentang Project
+## 📖 Deskripsi
 
-NuraBaby merupakan toko online yang menyediakan berbagai perlengkapan bayi, seperti pakaian, perlengkapan makan, mainan, popok, dan kebutuhan perawatan bayi.
+Baby Care E-Commerce Website merupakan project yang saya kembangkan untuk mensimulasikan proses jual beli produk perawatan bayi secara online. Website menyediakan berbagai fitur mulai dari katalog produk, pencarian, keranjang belanja, checkout, hingga dashboard admin untuk mengelola produk dan pesanan.
 
-NuraBaby merupakan website E-Commerce yang dikembangkan sebagai implementasi konsep dasar pengembangan website. Project ini menyediakan fitur untuk **Customer** dan **Admin** sehingga pengguna dapat melakukan proses belanja, sedangkan admin dapat mengelola produk dan pesanan.
-
-Dalam pengembangan project ini, saya berkontribusi pada implementasi fitur, penyempurnaan antarmuka, perbaikan bug, serta pengembangan logika aplikasi menggunakan JavaScript dan Local Storage.
+Melalui project ini saya menerapkan konsep pengembangan website menggunakan HTML, CSS, dan JavaScript, serta memanfaatkan Local Storage sebagai media penyimpanan data tanpa menggunakan database.
 
 ---
 
@@ -59,14 +59,6 @@ Dalam pengembangan project ini, saya berkontribusi pada implementasi fitur, peny
 
 ---
 
-# ⚙️ Penjelasan Teknis
-
-Website dibangun menggunakan HTML, CSS, dan JavaScript tanpa framework maupun database.
-
-Data pengguna, produk, keranjang belanja, pesanan, serta sesi login disimpan menggunakan **Local Storage**, sehingga aplikasi dapat berjalan secara mandiri tanpa server.
-
----
-
 # 🚀 Cara Menjalankan
 
 1. Clone atau download repository.
@@ -99,4 +91,5 @@ Project ini dikembangkan sebagai media pembelajaran dan implementasi konsep dasa
 ## 👩‍💻 Developer
 
 **Annisa Nur Afinni**
-Mahasiswa Manajemen Informatika
+
+Project ini saya kembangkan sebagai media pembelajaran untuk memperdalam kemampuan dalam pengembangan website menggunakan HTML, CSS, dan JavaScript. Seluruh fitur, antarmuka, serta implementasi logika aplikasi dikembangkan sebagai latihan membangun website e-commerce sederhana dengan penyimpanan data menggunakan Local Storage.
