@@ -1,140 +1,114 @@
-# 🍼 Baby Care E-Commerce Website
+# 👶 Baby Care - E-Commerce Website
 
-Website e-commerce sederhana bertema **produk perawatan bayi** yang dikembangkan sebagai project pembelajaran Front-End menggunakan **HTML, CSS, dan JavaScript** tanpa framework maupun database. Seluruh data disimpan menggunakan **Local Storage**, sehingga aplikasi tetap dapat digunakan meskipun halaman direfresh.
+> Website E-Commerce sederhana yang dikembangkan menggunakan **HTML, CSS, dan JavaScript** dengan penyimpanan data menggunakan **Local Storage**.
 
 ---
 ## 🌐 Live Demo
 
 👉 **[Live Demo](https://apinisa.github.io/ecommerce-baby-care/)**
 
-## 📖 Deskripsi
+# 📖 Tentang Project
 
-Project ini dibuat untuk mensimulasikan sebuah website e-commerce yang menjual berbagai kebutuhan bayi, seperti sabun, sampo, lotion, minyak telon, perlengkapan mandi, dan produk perawatan lainnya.
+NuraBaby merupakan website E-Commerce yang dikembangkan sebagai implementasi konsep dasar pengembangan website. Project ini menyediakan fitur untuk **Customer** dan **Admin** sehingga pengguna dapat melakukan proses belanja, sedangkan admin dapat mengelola produk dan pesanan.
 
-Website memiliki dua jenis pengguna, yaitu **Customer** dan **Admin**, sehingga proses belanja hingga pengelolaan produk dapat dilakukan dalam satu aplikasi.
-
----
-
-## ✨ Fitur Customer
-
-- Login & Registrasi
-- Beranda responsif
-- Daftar Produk
-- Filter berdasarkan kategori
-- Pencarian produk
-- Detail produk
-- Rating & Review
-- Keranjang Belanja
-- Checkout
-- Riwayat Pesanan
-- Download Bukti Pembayaran
-- Edit Profil
-- Responsive Design
+Dalam pengembangan project ini, saya berkontribusi pada implementasi fitur, penyempurnaan antarmuka, perbaikan bug, serta pengembangan logika aplikasi menggunakan JavaScript dan Local Storage.
 
 ---
 
-## 🛠️ Fitur Admin
+# 📊 Business Overview
 
-- Login Admin
-- Dashboard
-- Statistik Produk
-- Statistik Pesanan
-- Total Pendapatan
-- Kelola Produk (CRUD)
-- Manajemen Stok
-- Kelola Pesanan
-- Update Status Pesanan
-- Responsive Admin Dashboard
+### 🛍️ Nama Bisnis
 
----
+**NuraBaby**
 
-## 💻 Teknologi
+### 📌 Deskripsi
 
-- HTML5
-- CSS3
-- JavaScript (Vanilla JS)
-- Local Storage
-- Font Awesome
+NuraBaby merupakan toko online yang menyediakan berbagai perlengkapan bayi, seperti pakaian, perlengkapan makan, mainan, popok, dan kebutuhan perawatan bayi.
 
----
+### 🎯 Target Pengguna
 
-## 🎯 Value Proposition
+* Orang tua dengan bayi atau balita
+* Calon orang tua
+* Keluarga yang membutuhkan perlengkapan bayi
 
-- Tampilan modern dan responsif.
-- Mudah digunakan oleh pengguna.
-- Simulasi e-commerce tanpa database.
-- Data tersimpan menggunakan Local Storage.
-- Memiliki dashboard admin untuk mengelola toko.
+### ⭐ Value Proposition
+
+* Antarmuka sederhana dan mudah digunakan.
+* Desain responsif untuk desktop maupun mobile.
+* Dashboard admin untuk mengelola produk.
+* Penyimpanan data menggunakan Local Storage tanpa database.
 
 ---
 
-## 👨‍👩‍👧 Target Market
+# ✨ Fitur
 
-- Orang tua yang memiliki bayi.
-- Ibu hamil.
-- Keluarga dengan anak usia 0–5 tahun.
-- Pengguna yang mencari kebutuhan bayi secara online.
+### Customer
 
----
+* Login & Register
+* Melihat daftar produk
+* Pencarian produk
+* Keranjang belanja
+* Checkout
+* Riwayat pesanan
 
-## 🔐 Admin Account
+### Admin
 
-Gunakan akun berikut untuk login sebagai Admin.
-
-**Email**
-
-```
-nuradmin@gmail.com
-```
-
-**Password**
-
-```
-nura12345
-```
+* Dashboard
+* Tambah produk
+* Edit produk
+* Hapus produk
+* Kelola pesanan
 
 ---
 
-## 🚀 Cara Menjalankan Project
+# 💻 Teknologi
 
-1. Clone repository
-
-```bash
-git clone https://github.com/apinisa/baby-care-ecommerce.git
-```
-
-2. Buka project menggunakan Visual Studio Code.
-
-3. Jalankan menggunakan **Live Server**.
-
-4. Buka browser dan mulai menggunakan website.
+* HTML5
+* CSS3
+* JavaScript
+* Local Storage
+* Font Awesome
 
 ---
 
-## 📂 Struktur Project
+# ⚙️ Penjelasan Teknis
 
-```
-project/
-│
-├── admin/
-├── images/
-├── index.html
-├── produk.html
-├── keranjang.html
-├── checkout.html
-├── pesanan.html
-├── profile.html
-├── login.html
-├── register.html
-├── script.js
-├── style.css
-└── README.md
-```
+Website dibangun menggunakan HTML, CSS, dan JavaScript tanpa framework maupun database.
+
+Data pengguna, produk, keranjang belanja, pesanan, serta sesi login disimpan menggunakan **Local Storage**, sehingga aplikasi dapat berjalan secara mandiri tanpa server.
 
 ---
 
-## 👩‍💻 Author
+# 🚀 Cara Menjalankan
+
+1. Clone atau download repository.
+2. Buka folder project.
+3. Jalankan file `index.html` menggunakan browser.
+4. Login sebagai Customer atau Admin untuk mencoba seluruh fitur.
+
+---
+
+# 👩‍💻 Kontribusi
+
+Pada project ini saya berkontribusi dalam:
+
+* Mengembangkan dan menyempurnakan tampilan antarmuka (UI).
+* Mengimplementasikan fitur Customer dan Admin menggunakan JavaScript.
+* Mengembangkan pengelolaan data menggunakan Local Storage.
+* Memperbaiki bug dan meningkatkan fungsionalitas website.
+* Melakukan pengujian untuk memastikan setiap fitur berjalan dengan baik.
+
+Kontribusi tersebut memberikan pengalaman dalam membangun aplikasi web sederhana sekaligus memperdalam pemahaman mengenai pengembangan website berbasis HTML, CSS, dan JavaScript.
+
+---
+
+# 📌 Catatan
+
+Project ini dikembangkan sebagai media pembelajaran dan implementasi konsep dasar website E-Commerce. Repository ini digunakan sebagai dokumentasi hasil pengembangan serta portfolio untuk menunjukkan pengalaman dalam pengembangan aplikasi web.
+
+---
+
+## 👩‍💻 Developer
 
 **Annisa Nur Afinni**
-
-Project ini dibuat sebagai media pembelajaran dalam pengembangan website e-commerce menggunakan HTML, CSS, JavaScript, dan Local Storage.
+Mahasiswa Manajemen Informatika
