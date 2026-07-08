@@ -9,34 +9,11 @@
 
 # 📖 Tentang Project
 
+NuraBaby merupakan toko online yang menyediakan berbagai perlengkapan bayi, seperti pakaian, perlengkapan makan, mainan, popok, dan kebutuhan perawatan bayi.
+
 NuraBaby merupakan website E-Commerce yang dikembangkan sebagai implementasi konsep dasar pengembangan website. Project ini menyediakan fitur untuk **Customer** dan **Admin** sehingga pengguna dapat melakukan proses belanja, sedangkan admin dapat mengelola produk dan pesanan.
 
 Dalam pengembangan project ini, saya berkontribusi pada implementasi fitur, penyempurnaan antarmuka, perbaikan bug, serta pengembangan logika aplikasi menggunakan JavaScript dan Local Storage.
-
----
-
-# 📊 Business Overview
-
-### 🛍️ Nama Bisnis
-
-**NuraBaby**
-
-### 📌 Deskripsi
-
-NuraBaby merupakan toko online yang menyediakan berbagai perlengkapan bayi, seperti pakaian, perlengkapan makan, mainan, popok, dan kebutuhan perawatan bayi.
-
-### 🎯 Target Pengguna
-
-* Orang tua dengan bayi atau balita
-* Calon orang tua
-* Keluarga yang membutuhkan perlengkapan bayi
-
-### ⭐ Value Proposition
-
-* Antarmuka sederhana dan mudah digunakan.
-* Desain responsif untuk desktop maupun mobile.
-* Dashboard admin untuk mengelola produk.
-* Penyimpanan data menggunakan Local Storage tanpa database.
 
 ---
 
